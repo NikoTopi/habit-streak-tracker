@@ -1,0 +1,226 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Habit circle animations ─────────────────────────────────── */
+
+/* One-shot burst glow that expands and fades out */
+@keyframes habitBurst {
+  0%   { transform: scale(1); opacity: 0.7; filter: blur(8px); }
+  50%  { transform: scale(1.35); opacity: 0.45; filter: blur(16px); }
+  100% { transform: scale(1.5); opacity: 0; filter: blur(20px); }
+}
+
+/* Circle pop on toggle */
+@keyframes habitPop {
+  0%   { transform: scale(1.05); }
+  30%  { transform: scale(1.22); }
+  65%  { transform: scale(0.98); }
+  100% { transform: scale(1.05); }
+}
+
+/* Checkmark badge bounces in */
+@keyframes habitCheckBadge {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  65%  { transform: scale(1.2) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Ripple on tap */
+@keyframes habitRipple {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Streak badge gentle pulse */
+@keyframes habitStreakBadge {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.1); }
+}
+
+.habit-burst {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  animation: habitBurst 0.55s ease-out forwards;
+  pointer-events: none;
+}
+
+.habit-pop {
+  animation: habitPop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+
+.habit-check-badge {
+  animation: habitCheckBadge 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.habit-ripple {
+  animation: habitRipple 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+.habit-streak-badge {
+  animation: habitStreakBadge 2.2s ease-in-out infinite;
+}
+
+.habit-sticker {
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* ── Achievement overlay animations ─────────────────────────────── */
+
+@keyframes confettiFall {
+  0%   { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes confettiFallLeft {
+  0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+  50%  { transform: translateY(50vh) translateX(-80px) rotate(400deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) translateX(-140px) rotate(900deg); opacity: 0; }
+}
+
+@keyframes confettiFallRight {
+  0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 1; }
+  50%  { transform: translateY(50vh) translateX(90px) rotate(-360deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) translateX(150px) rotate(-800deg); opacity: 0; }
+}
+
+@keyframes celebFadeIn {
+  0%   { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes celebFadeOut {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+
+@keyframes trophyDrop {
+  0%   { transform: translateY(-40px) scale(0.6); opacity: 0; }
+  60%  { transform: translateY(8px) scale(1.15); opacity: 1; }
+  80%  { transform: translateY(-4px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.celeb-overlay-exit {
+  background: linear-gradient(135deg,
+    rgba(109,40,217,0.93) 0%,
+    rgba(168,85,247,0.90) 30%,
+    rgba(236,72,153,0.88) 60%,
+    rgba(79,70,229,0.93) 100%);
+  animation: celebFadeOut 0.35s ease-in forwards;
+}
+
+.celeb-overlay {
+  background: linear-gradient(135deg,
+    rgba(109,40,217,0.93) 0%,
+    rgba(168,85,247,0.90) 30%,
+    rgba(236,72,153,0.88) 60%,
+    rgba(79,70,229,0.93) 100%);
+  animation: celebFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.trophy-drop {
+  animation: trophyDrop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s both;
+}
+
+.confetti-particle {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: confettiFall linear infinite;
+}
+
+/* Spread particles: varied colors (solid + gradients), sizes, shapes, drift directions */
+
+/* circles – solid vivid */
+.confetti-particle:nth-child(1)  { left:  2%; width:12px; height:12px; background: #f43f5e; animation-name: confettiFallRight; animation-duration: 1.1s; animation-delay: 0.00s; }
+.confetti-particle:nth-child(2)  { left:  7%; width: 8px; height: 8px;  background: #facc15; animation-name: confettiFall;      animation-duration: 0.85s; animation-delay: 0.28s; }
+.confetti-particle:nth-child(3)  { left: 13%; width:14px; height:14px; background: #22d3ee; animation-name: confettiFallLeft;  animation-duration: 1.25s; animation-delay: 0.05s; }
+.confetti-particle:nth-child(4)  { left: 19%; width:10px; height:10px; background: #a3e635; animation-name: confettiFall;      animation-duration: 1.0s;  animation-delay: 0.45s; }
+.confetti-particle:nth-child(5)  { left: 25%; width: 8px; height: 8px;  background: #fb923c; animation-name: confettiFallRight; animation-duration: 0.9s;  animation-delay: 0.18s; }
+.confetti-particle:nth-child(6)  { left: 31%; width:16px; height:16px; background: #e879f9; animation-name: confettiFall;      animation-duration: 1.3s;  animation-delay: 0.55s; }
+.confetti-particle:nth-child(7)  { left: 37%; width:10px; height:10px; background: #34d399; animation-name: confettiFallLeft;  animation-duration: 1.0s;  animation-delay: 0.08s; }
+.confetti-particle:nth-child(8)  { left: 43%; width:12px; height:12px; background: #60a5fa; animation-name: confettiFall;      animation-duration: 0.95s; animation-delay: 0.35s; }
+.confetti-particle:nth-child(9)  { left: 49%; width: 8px; height: 8px;  background: #f43f5e; animation-name: confettiFallRight; animation-duration: 1.15s; animation-delay: 0.62s; }
+.confetti-particle:nth-child(10) { left: 55%; width:14px; height:14px; background: #fbbf24; animation-name: confettiFall;      animation-duration: 1.05s; animation-delay: 0.12s; }
+.confetti-particle:nth-child(11) { left: 61%; width:10px; height:10px; background: #818cf8; animation-name: confettiFallLeft;  animation-duration: 0.88s; animation-delay: 0.42s; }
+.confetti-particle:nth-child(12) { left: 67%; width:12px; height:12px; background: #2dd4bf; animation-name: confettiFall;      animation-duration: 1.2s;  animation-delay: 0.22s; }
+.confetti-particle:nth-child(13) { left: 73%; width: 8px; height: 8px;  background: #fb7185; animation-name: confettiFallRight; animation-duration: 1.0s;  animation-delay: 0.5s;  }
+.confetti-particle:nth-child(14) { left: 79%; width:16px; height:16px; background: #4ade80; animation-name: confettiFall;      animation-duration: 1.35s; animation-delay: 0.02s; }
+.confetti-particle:nth-child(15) { left: 85%; width:10px; height:10px; background: #c084fc; animation-name: confettiFallLeft;  animation-duration: 0.92s; animation-delay: 0.38s; }
+.confetti-particle:nth-child(16) { left: 91%; width:12px; height:12px; background: #f97316; animation-name: confettiFall;      animation-duration: 1.1s;  animation-delay: 0.58s; }
+.confetti-particle:nth-child(17) { left: 97%; width: 8px; height: 8px;  background: #38bdf8; animation-name: confettiFallLeft;  animation-duration: 0.8s;  animation-delay: 0.15s; }
+
+/* squares / pills – gradient fills */
+.confetti-particle:nth-child(18) { left:  5%; width:10px; height:10px; border-radius: 2px;    background: linear-gradient(135deg,#f43f5e,#fb923c); animation-name: confettiFallRight; animation-duration: 1.05s; animation-delay: 0.33s; }
+.confetti-particle:nth-child(19) { left: 15%; width:14px; height: 6px; border-radius: 3px;    background: linear-gradient(135deg,#a855f7,#ec4899); animation-name: confettiFall;      animation-duration: 0.9s;  animation-delay: 0.48s; }
+.confetti-particle:nth-child(20) { left: 27%; width: 8px; height:14px; border-radius: 4px;    background: linear-gradient(180deg,#22d3ee,#6366f1); animation-name: confettiFallLeft;  animation-duration: 1.2s;  animation-delay: 0.07s; }
+.confetti-particle:nth-child(21) { left: 40%; width:12px; height: 5px; border-radius: 2px;    background: linear-gradient(135deg,#facc15,#f97316); animation-name: confettiFall;      animation-duration: 1.0s;  animation-delay: 0.52s; }
+.confetti-particle:nth-child(22) { left: 53%; width:10px; height:10px; border-radius: 2px;    background: linear-gradient(135deg,#34d399,#22d3ee); animation-name: confettiFallRight; animation-duration: 1.15s; animation-delay: 0.20s; }
+.confetti-particle:nth-child(23) { left: 65%; width:14px; height: 6px; border-radius: 3px;    background: linear-gradient(135deg,#f43f5e,#a855f7); animation-name: confettiFall;      animation-duration: 0.85s; animation-delay: 0.60s; }
+.confetti-particle:nth-child(24) { left: 77%; width: 6px; height:12px; border-radius: 3px;    background: linear-gradient(180deg,#fbbf24,#fb7185); animation-name: confettiFallLeft;  animation-duration: 1.3s;  animation-delay: 0.10s; }
+.confetti-particle:nth-child(25) { left: 89%; width:12px; height: 5px; border-radius: 2px;    background: linear-gradient(135deg,#818cf8,#38bdf8); animation-name: confettiFall;      animation-duration: 1.0s;  animation-delay: 0.44s; }
+
+/* stars / diamonds – square rotated 45° via border-radius 0 */
+.confetti-particle:nth-child(26) { left: 21%; width:10px; height:10px; border-radius: 0;      background: linear-gradient(135deg,#fde68a,#f59e0b); animation-name: confettiFallRight; animation-duration: 1.1s;  animation-delay: 0.30s; }
+.confetti-particle:nth-child(27) { left: 58%; width:12px; height:12px; border-radius: 0;      background: linear-gradient(135deg,#d946ef,#f43f5e); animation-name: confettiFallLeft;  animation-duration: 0.95s; animation-delay: 0.16s; }
+.confetti-particle:nth-child(28) { left: 83%; width:10px; height:10px; border-radius: 0;      background: linear-gradient(135deg,#6ee7b7,#3b82f6); animation-name: confettiFall;      animation-duration: 1.2s;  animation-delay: 0.55s; }
+
+/* ── Progress ring ──────────────────────────────────────────────── */
+.habit-progress-ring-arc {
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.4,0,0.2,1), stroke 0.3s ease;
+}
+
+@keyframes ringGlow {
+  0%, 100% { filter: drop-shadow(0 0 3px white) drop-shadow(0 0 5px white); }
+  50%       { filter: drop-shadow(0 0 6px white) drop-shadow(0 0 12px white); }
+}
+.ring-glow { animation: ringGlow 1.8s ease-in-out infinite; }
+
+/* ── Toast ──────────────────────────────────────────────────────── */
+@keyframes toastIn {
+  0%   { opacity: 0; transform: translate(-50%, 16px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+.animate-toast-in { animation: toastIn 0.25s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+
+/* ── Milestone badge ────────────────────────────────────────────── */
+@keyframes milestoneCardIn {
+  0%   { opacity: 0; transform: scale(0.85) translateY(12px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes milestoneOut {
+  0%   { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(1.06) translateY(-8px); }
+}
+@keyframes milestoneEmojiDrop {
+  0%   { transform: translateY(-24px) scale(0.5); opacity: 0; }
+  60%  { transform: translateY(6px) scale(1.2); opacity: 1; }
+  80%  { transform: translateY(-3px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+.milestone-card-enter { animation: milestoneCardIn 0.35s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+.milestone-card-exit  { animation: milestoneOut 0.3s ease-in forwards; }
+.milestone-emoji-drop { animation: milestoneEmojiDrop 0.55s cubic-bezier(0.175,0.885,0.32,1.275) 0.1s both; }
+
+/* Color picker variant panel */
+@keyframes colorVariantsIn {
+  0%   { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-color-variants-in {
+  animation: colorVariantsIn 0.18s ease-out both;
+}
+@keyframes colorSwatchIn {
+  0%   { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-color-swatch-in {
+  animation: colorSwatchIn 0.18s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
